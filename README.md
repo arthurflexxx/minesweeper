@@ -25,7 +25,7 @@ The game field looks like this
 
 ![3Gs99WftHDA](https://github.com/user-attachments/assets/c5f29fb5-a6fa-4f50-bb6e-4ab1f851fac6)
 
-When you open a cell
+When you reveal a cell
 
 ![image](https://github.com/user-attachments/assets/15c54074-2b50-4284-9466-856c0565ccca)
 
@@ -43,5 +43,4 @@ class CellStatus(Enum):
     MINE = "[*]"
     MINES_AROUND = "[{mines}]"
 ```
-______
-The example of integrating Minesweeper logic in a project is in `main.py`
+_____
