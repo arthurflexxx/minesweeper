@@ -2,7 +2,8 @@ from enum import Enum
 from dataclasses import dataclass
 
 
-class CellStatus(Enum):
+class CellStates(Enum):
+    """Represents the different states of a cell."""
     CLOSED = "[■]"
     REVEALED = "[ ]"
     FLAGGED = "[F]"
@@ -12,26 +13,28 @@ class CellStatus(Enum):
 
 @dataclass()
 class Cell:
-    row: int
-    col: int
+    row: int  # y coord
+    col: int  # x coord
 
     mines_around: int = 0
     is_revealed: bool = False
     is_mine: bool = False
-    status: CellStatus = CellStatus.CLOSED.value
+
+    status: CellStates = CellStates.CLOSED.value
 
     def get_display(self):
+        """Returns the string representation of the cell for display purposes."""
         if self.is_revealed:
-            return self.status
+            return self.status.value
+        return CellStates.CLOSED.value
 
-        return CellStatus.CLOSED.value
-
-    def cell_reveal(self):
+    def reveal(self):
+        """Reveals the cell and updates its status based on its contents."""
         self.is_revealed = True
 
         if self.is_mine:
-            self.status = CellStatus.MINE.value
+            self.status = CellStates.MINE.value
         elif self.mines_around:
-            self.status = CellStatus.MINES_AROUND.value.format(mines=self.mines_around)
+            self.status = CellStates.MINES_AROUND.value.format(mines=self.mines_around)
         else:
-            self.status = CellStatus.REVEALED.value
+            self.status = CellStates.REVEALED.value

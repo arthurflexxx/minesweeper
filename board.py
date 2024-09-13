@@ -1,33 +1,51 @@
 import random
 
-from cell import Cell, CellStatus
+from cell import Cell, CellStates
 
 
 class Board:
     def __init__(self, rows, cols, bombs) -> None:
+        """
+        Initializes the Minesweeper board.
+
+        Args:
+            rows (int): Number of rows on the board. (y coord)
+            cols (int): Number of columns on the board. (x coord)
+            bombs (int): Number of mines to place on the board.
+        """
         self.rows = rows
         self.cols = cols
         self.bombs = bombs
 
         self.mines = set()
         self.flags = set()
+
+        # Create a 2D list of cells, representing the board
         self.cells = [[Cell(i, j) for j in range(self.cols)] for i in range(self.rows)]
 
     def get_cell(self, row, col) -> Cell:
         return self.cells[row][col]
 
-    def place_mines(self, exception_=None | tuple):
+    def place_mines(self, exception: tuple | None = None):
+        """
+        Places mines randomly on the board, avoiding a specified cell.
+
+        Args:
+            exception (tuple | None, optional): Tuple representing (row, col) of a cell
+                to exclude from mine placement. Defaults to None.
+        """
         while len(self.mines) < self.bombs:
             col = random.randint(0, self.cols - 1)
             row = random.randint(0, self.rows - 1)
 
-            if (row, col) != exception_:
+            if (row, col) != exception:
                 self.get_cell(row, col).is_mine = True
                 self.mines.add((row, col))
 
         self.count_mines()
 
     def count_mines(self):
+        """Counts the number of mines around for each cell on the board."""
         for row, col in self.mines:
             for i in range(row - 1, row + 2):
                 for j in range(col - 1, col + 2):
@@ -40,19 +58,24 @@ class Board:
 
     def show_mines(self):
         for i, j in self.mines:
-            self.get_cell(i, j).cell_reveal()
+            self.get_cell(i, j).reveal()
 
     def draw_board(self):
+        # Calculate the maximum number of digits needed for row numbers
         max_row_digits = len(str(self.rows - 1))
+
+        # Print the column numbers
         print(
             " " * (max_row_digits + 1) + " ".join(f"{i:>{2}}" for i in range(self.cols))
         )
 
+        # Print each row of the board
         for i, _ in enumerate(self.cells):
+            # Print the row number
             print(f"{i:>{max_row_digits}} ", end="")
             for cell in _:
                 if (cell.row, cell.col) in self.flags:
-                    print(CellStatus.FLAGGED.value, end="")
+                    print(CellStates.FLAGGED.value, end="")
                 else:
                     print(cell.get_display(), end="")
             print("")
