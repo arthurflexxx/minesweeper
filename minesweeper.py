@@ -67,11 +67,13 @@ class Minesweeper:
         return False
 
     def game_end(self, win=False, win_by_flags=False, show_mines=True):
+        print("\033[H\033[J", end="")
         self.is_game_over = True
         if not win_by_flags and show_mines:
             self.board.show_mines()
 
         self.play_time = int(time.time() - self.start_time) // 1
+        print("Win" if win else "Lose")
         print(f"Play time: {self.play_time} seconds\n")
         self.board.draw_board()
 
