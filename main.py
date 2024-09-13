@@ -12,7 +12,8 @@ def play():
         print("Print valid values (all > 0) and mines != rows * cols")
 
     game: Minesweeper = Minesweeper(Board(rows, cols, mines))
-    while not game.is_game_over:
+
+    while True:
         print("\033[H\033[J", end="")
         print(f"Bombs left: {game.bombs_left}")
 
