@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 class CellStates(Enum):
     """Represents the different states of a cell."""
+
     CLOSED = "[■]"
     REVEALED = "[ ]"
     FLAGGED = "[F]"
@@ -25,7 +26,7 @@ class Cell:
     def get_display(self):
         """Returns the string representation of the cell for display purposes."""
         if self.is_revealed:
-            return self.status.value
+            return self.status
         return CellStates.CLOSED.value
 
     def reveal(self):
