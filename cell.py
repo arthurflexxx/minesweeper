@@ -19,15 +19,20 @@ class Cell:
 
     mines_around: int = 0
     is_revealed: bool = False
+    is_flagged: bool = False
     is_mine: bool = False
 
     status: CellStates = CellStates.CLOSED.value
 
     def get_display(self):
         """Returns the string representation of the cell for display purposes."""
-        if self.is_revealed:
+        if self.is_revealed or self.is_flagged:
             return self.status
         return CellStates.CLOSED.value
+
+    def toggle_flag(self):
+        self.is_flagged = not self.is_flagged
+        self.status = CellStates.FLAGGED.value if self.is_flagged else CellStates.CLOSED.value
 
     def reveal(self):
         """Reveals the cell and updates its status based on its contents."""

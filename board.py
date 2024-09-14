@@ -1,6 +1,6 @@
 import random
 
-from cell import Cell, CellStates
+from cell import Cell
 
 
 class Board:
@@ -74,10 +74,7 @@ class Board:
             # Print the row number
             print(f"{i:>{max_row_digits}} ", end="")
             for cell in _:
-                if (cell.row, cell.col) in self.flags:
-                    print(CellStates.FLAGGED.value, end="")
-                else:
-                    print(cell.get_display(), end="")
+                print(cell.get_display(), end="")
             print("")
         print("\n")
 

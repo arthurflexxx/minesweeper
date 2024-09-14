@@ -53,6 +53,7 @@ class Minesweeper:
             self.visited.add((cur_row, cur_col))
 
     def toggle_flag(self, row, col):
+        self.board.get_cell(row, col).toggle_flag()
         if (row, col) not in self.board.flags and self.bombs_left > 0:
             # Add a flag if it's not already flagged and there are bombs left
             self.board.flags.add((row, col))
