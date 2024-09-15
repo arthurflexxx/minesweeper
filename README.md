@@ -1,18 +1,16 @@
 # Simple Python implementation of the Minesweeper game.
 
 + At the start of the game, enter the desired rows, columns, and mines.
-+ **Optional:** To fix the game size, remove the while loop in `main.py` and set the desired size directly in the Minesweeper constructor `game: Minesweeper = Minesweeper(Board(rows, cols, mines))`.
++ **Optional:** To fix the game size, set the desired size directly in the Minesweeper constructor `game: Minesweeper = Minesweeper(rows, cols, mines)`.
 ```python
 def play():
-    while True:
-        rows, cols, mines = map(int, input("rows, cols, mines: ").split())
+    """
+    Main function to start and run the Minesweeper game.
+    """
+    rows, cols, mines = input_game_size()
 
-        if all(v > 0 for v in (rows, cols, mines)) and mines != rows * cols:
-            break
-
-        print("Print valid values (all > 0) and mines != rows * cols")
-
-    game: Minesweeper = Minesweeper(Board(rows, cols, mines))
+    # Create a Minesweeper game instance with the specified parameters
+    game: Minesweeper = Minesweeper(rows, cols, mines)
 ```
 _____
 The game field looks like this
