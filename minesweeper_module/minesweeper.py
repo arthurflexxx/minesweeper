@@ -37,6 +37,7 @@ class Minesweeper:
 
             if cell.mines_around:  # If the cell has adjacent mines, just reveal it
                 cell.reveal()
+                self.visited.add((cur_row, cur_col))
             else:
                 # If the cell is empty, reveal it and add its neighbors to the queue
                 for i in range(cur_row - 1, cur_row + 2):
