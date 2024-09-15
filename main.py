@@ -40,7 +40,6 @@ def play():
         # Clear the console and display remaining bombs
         # print("\033[H\033[J", end="")
         print(f"Bombs left: {game.bombs_left}")
-        print(game.count)
         game.board.draw_board()
 
         row, col, f = input_cell_coord(game)
