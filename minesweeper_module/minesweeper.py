@@ -5,10 +5,10 @@ from .board import Board, Cell
 
 
 class Minesweeper:
-    def __init__(self, board: Board) -> None:
+    def __init__(self, rows, cols, mines) -> None:
         """Initializes the Minesweeper game with a given board."""
-        self.board = board
-        self.bombs_left = board.bombs
+        self.board = Board(rows, cols, mines)
+        self.bombs_left = mines
 
         self.first_move = True
         self.is_game_over = False
@@ -46,10 +46,27 @@ class Minesweeper:
                             and 0 <= j < self.board.cols
                             and (i, j) not in self.visited
                         ):
-                            cell.reveal()
+                            self.board.get_cell(i, j).reveal()
+                            self.visited.add((i, j))
                             queue.append((i, j))
 
-            self.visited.add((cur_row, cur_col))
+    def game_cycle(self, row, col, put_flag=False):
+        if self.first_move:
+            self.make_first_move(row, col)
+            self.check_win()
+            return
+
+        if put_flag:
+            self.toggle_flag(row, col)
+        else:
+            if self.check_step_on_mine(row, col):
+                self.game_end()
+                return
+            self.reveal(row, col)
+
+        if self.check_win():
+            self.game_end(win=True)
+            return
 
     def toggle_flag(self, row, col):
         self.board.get_cell(row, col).toggle_flag()
