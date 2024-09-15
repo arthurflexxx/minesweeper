@@ -1,6 +1,6 @@
 import random
 
-from cell import Cell
+from .cell import Cell
 
 
 class Board:

@@ -1,8 +1,7 @@
 import time
 from collections import deque
 
-from board import Board
-from cell import Cell
+from .board import Board, Cell
 
 
 class Minesweeper:
